@@ -21,6 +21,7 @@
 ### Go Patch ###
 /vendor/
 /Godeps/
+/cronexpdemo/public/*.*
 
 ### react ###
 .DS_*
