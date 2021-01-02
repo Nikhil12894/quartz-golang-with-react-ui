@@ -27,7 +27,7 @@ func setupRouter() *gin.Engine {
 	r := gin.New()
 	gin.SetMode(gin.ReleaseMode)
 	// Serve frontend static files
-	r.Use(static.Serve("/", static.LocalFile("./public", true)))
+	r.Use(static.Serve("/", static.LocalFile("./public/build", true)))
 	api := r.Group("/api")
 	// Ping test
 	api.GET("/description", getDescription)
