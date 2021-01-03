@@ -15,9 +15,14 @@ import (
 )
 
 func main() {
+	var port = os.Getenv("PORT") //Getenv("PORT")
+	if port == "" {
+		port = "9091"
+	}
+	gin.SetMode(gin.ReleaseMode)
 	r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
-	r.Run(":9091")
+	// Listen and Server in 0.0.0.0:$PORT
+	r.Run(":" + port)
 
 }
 
@@ -25,7 +30,7 @@ func setupRouter() *gin.Engine {
 	// Disable Console Color
 	// gin.DisableConsoleColor()
 	r := gin.New()
-	gin.SetMode(gin.ReleaseMode)
+
 	// Serve frontend static files
 	r.Use(static.Serve("/", static.LocalFile("./public/build", true)))
 	api := r.Group("/api")
@@ -55,12 +60,18 @@ func describe(exp string) (string, error) {
 	return desc, nil
 }
 
-func nextNScheduledTime(exp string, n uint) []time.Time {
+func nextNScheduledTime(exp string, n uint) []string {
 	// get the current time
 	now := time.Now()
 	// 1. Define two cronJob
 	expr1 := cronexpr.MustParse(exp) // parse cron expression will be successful
-	return expr1.NextN(now, n)
+	times := expr1.NextN(now, n)
+	lenthData := int(n)
+	response := make([]string, lenthData)
+	for i := 0; i < lenthData; i++ {
+		response[i] = times[i].Format(time.ANSIC)
+	}
+	return response
 
 }
 
