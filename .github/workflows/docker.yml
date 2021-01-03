@@ -19,7 +19,7 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: docker build cronjobDemoServer
       run: |
-        docker build ./server -t nikhil12894/glang_react_cron_ui:1.0.0
+        docker build . -t nikhil12894/glang_react_cron_ui:1.0.0
     - name: docker push
       run: |
         docker push nikhil12894/glang_react_cron_ui:1.0.0
@@ -34,6 +34,6 @@ jobs:
         email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
         api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
         app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
-        dockerfile_path: './server' # set the path to the folder wher the Dokerfile is located
+        dockerfile_path: '.' # set the path to the folder wher the Dokerfile is located
         options: '' # Docker Build Options
         formation: '' # Docker Dyno Formation. By default is web
