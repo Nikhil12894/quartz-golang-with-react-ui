@@ -21,7 +21,6 @@
 ### Go Patch ###
 /vendor/
 /Godeps/
-/server/public/build/
 
 ### react ###
 .DS_*

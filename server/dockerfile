@@ -1,7 +1,7 @@
 # Build executable stage
 FROM golang
 # Add Maintainer Info
-LABEL maintainer="Rajeev Singh <rajeevhub@gmail.com>"
+LABEL maintainer="Nalin <nalin12894@gmail.com>"
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
