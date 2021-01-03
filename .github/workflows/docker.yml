@@ -9,35 +9,7 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # steps:
-    # - uses: actions/checkout@v2
-    # - name: docker login
-    #   env:
-    #     DOCKER_USER: ${{ secrets.DOCKER_USER }}   
-    #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    #   run: |
-    #     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-    # - name: docker build cronjobDemoServer
-    #   run: |
-    #     docker build . -t nikhil12894/glang_react_cron_ui:1.0.0
-    # - name: docker push
-    #   run: |
-    #     docker push nikhil12894/glang_react_cron_ui:1.0.0
-    # - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
-    #   id: heroku
-    #   uses: jctaveras/heroku-deploy@v1.0.0  # use the latest version of the action
-    #   env:
-    #     HEROKU_EMAIL: ${{secrets.HEROKU_EMAIL}}
-    #     HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}  
-    #     HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}  
-    #   with:
-    #     email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
-    #     api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
-    #     app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
-    #     dockerfile_path: '.' # set the path to the folder wher the Dokerfile is located
-    #     options: '' # Docker Build Options
-    #     formation: '' # Docker Dyno Formation. By default is web
-     steps:
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
@@ -47,6 +19,6 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           app_name: ${{ secrets.HEROKU_APP_NAME }} # you aplication name
-          dockerfile_path: '' # set the path to the folder wher the Dokerfile is located
+          dockerfile_path: '.' # set the path to the folder wher the Dokerfile is located
           options: '' # Docker Build Options
           formation: '' # Docker Dyno Formation. By default is web
