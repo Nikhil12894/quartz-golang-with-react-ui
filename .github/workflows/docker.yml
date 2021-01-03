@@ -4,8 +4,7 @@
 
 name: Docker Series Builds
 
-on: [push]
-
+on:
 jobs:
   build:
     runs-on: ubuntu-latest
