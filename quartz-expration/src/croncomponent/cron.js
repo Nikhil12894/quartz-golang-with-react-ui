@@ -8,7 +8,7 @@ class Cron extends Component {
         this.state = {
             cronValue: '0 0 12 L-2 * ? *',
             description:'At 12:00, 2 days before the last day of the month',
-            nextFiveSchedule:[]
+            nextFiveSchedule:["Fri Jan 29 12:00:00 2021","Fri Feb 26 12:00:00 2021","Mon Mar 29 12:00:00 2021","Wed Apr 28 12:00:00 2021","Sat May 29 12:00:00 2021"]
         };
     }
     handleChange(cronVal) {
@@ -28,7 +28,6 @@ class Cron extends Component {
         axios.get('/api/next/5?expration='+this.state.cronValue)
         .then(response=>{
             this.setState({ nextFiveSchedule:response.data.data });
-            console.log(this.state.nextFiveSchedule)
         })
         .catch(error=>{
             console.error(error)
@@ -57,11 +56,11 @@ class Cron extends Component {
                         <span className="display-5 font-weight-bold pl-3">Expration : {this.state.cronValue}</span>
                         <hr className="my-1"></hr>
                         <div className="p-2 m-3"> 
-                            <p className="lead">Description : {this.state.description}.</p>
+                            <p className="lead"><strong>Description : </strong>{this.state.description}.</p>
                             <div>
                                 {
                                     nextFiveSchedule.length?
-                                    nextFiveSchedule.map((schedule) =><div key={schedule}>{schedule}</div>) :
+                                    nextFiveSchedule.map((schedule) =><p className="text-monospace text-uppercase" key={schedule}>{schedule}</p>) :
                                     null
                                 }
                             </div>
