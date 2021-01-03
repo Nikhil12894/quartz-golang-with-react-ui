@@ -28,6 +28,8 @@ jobs:
         docker push nikhil12894/glang_react_cron_ui:1.0.0
     - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
       id: heroku
+      run: |
+        cd ./server
       uses: jctaveras/heroku-deploy@v1.0.0  # use the latest version of the action
       with:
         email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
