@@ -1,17 +1,13 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	"github.com/lnquy/cron"
-	"github.com/nikhil12894/cronexpr"
+	"github.com/nikhil12894/quartz-golang-with-react-ui/server/scheduling"
 )
 
 func main() {
@@ -41,46 +37,12 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func describe(exp string) (string, error) {
-	exprDesc, err := cron.NewDescriptor(
-		cron.Use24HourTimeFormat(true),
-		cron.DayOfWeekStartsAtOne(false),
-		cron.Verbose(true),
-		cron.SetLogger(log.New(os.Stdout, "cron: ", 0)),
-		cron.SetLocales(cron.Locale_en),
-	)
-	if err != nil {
-		return "", fmt.Errorf("failed to create CRON expression descriptor: %s", err)
-	}
-
-	desc, err := exprDesc.ToDescription(exp, cron.Locale_en)
-	if err != nil {
-		return "", fmt.Errorf("failed to create CRON expression descriptor: %s", err)
-	}
-	return desc, nil
-}
-
-func nextNScheduledTime(exp string, n uint) []string {
-	// get the current time
-	now := time.Now()
-	// 1. Define two cronJob
-	expr1 := cronexpr.MustParse(exp) // parse cron expression will be successful
-	times := expr1.NextN(now, n)
-	lenthData := int(n)
-	response := make([]string, lenthData)
-	for i := 0; i < lenthData; i++ {
-		response[i] = times[i].Format(time.ANSIC)
-	}
-	return response
-
-}
-
 func getDescription(c *gin.Context) {
 	expration, ok := c.GetQuery("expration")
 	if !ok {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}
-	description, err := describe(expration)
+	description, err := scheduling.Describe(expration)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	}
@@ -98,6 +60,6 @@ func nextN(c *gin.Context) {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	}
 	n := uint(num)
-	description := nextNScheduledTime(expration, n)
+	description := scheduling.NextNScheduledTime(expration, n)
 	c.JSON(http.StatusOK, gin.H{"data": description})
 }
