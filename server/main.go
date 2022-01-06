@@ -19,8 +19,10 @@ func main() {
 	if port == "" {
 		port = "9091"
 	}
+
 	gin.SetMode(gin.ReleaseMode)
 	r := setupRouter()
+	r.Use(gin.Logger())
 	// Listen and Server in 0.0.0.0:$PORT
 	r.Run(":" + port)
 
